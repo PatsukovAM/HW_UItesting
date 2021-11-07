@@ -1,6 +1,7 @@
 package lesson3Tests;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +13,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.util.concurrent.TimeUnit;
 
 public class mailruTests {
@@ -42,7 +45,7 @@ public class mailruTests {
 
 
         WebElement checkMessage = driver.findElement(By.xpath("//a[@class='layer__link']"));
-        assertThat(checkMessage.getText(),equalTo("Письмо отправлено"));
+        assertThat(checkMessage.getText(), equalTo("Письмо отправлено"));
 
         Thread.sleep(5000);
         driver.quit();
@@ -74,7 +77,7 @@ public class mailruTests {
                 .click();
 
         WebElement checkMessage = driver.findElement(By.xpath("//span[@class='octopus__title']"));
-        assertThat(checkMessage.getText(),equalTo("В папке нет писем."));
+        assertThat(checkMessage.getText(), equalTo("В папке нет писем."));
 
         Thread.sleep(5000);
         driver.quit();
@@ -105,7 +108,7 @@ public class mailruTests {
 
         WebElement checkMessage = driver.findElement(By.xpath("//span[@class='octopus__title']"));
         //вот тут я вообще не понял разницы в ассерте
-        assertThat(checkMessage.getText(),equalTo("У вас нет незаконченных\\nили неотправленных писем"));
+        assertThat(checkMessage.getText(), equalTo("У вас нет незаконченных\\nили неотправленных писем"));
 
         Thread.sleep(5000);
         driver.quit();
