@@ -1,38 +1,54 @@
-package lesson3Tests;
+package lesson5Tests;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.util.concurrent.TimeUnit;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class mailruTests {
 
-    @Order(1)
-    @Test
-    public void endToEndSendEmptyMailTest() throws InterruptedException {
+    WebDriver driver;
+    WebDriverWait webDriverWait;
+    WebElement dynamicElement;
+
+    @BeforeAll
+    static void setupDriver() {
         WebDriverManager.chromedriver().setup();
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-        //driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    }
 
+    @BeforeEach
+    void initBrowser()  {
+        driver = new ChromeDriver();
+        webDriverWait = new WebDriverWait(driver, 5);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        mailruLogin(driver, webDriverWait);
+    }
+
+    static void mailruLogin(WebDriver driver, WebDriverWait webDriverWait)  {
         driver.get("https://mail.ru/");
         driver.findElement(By.name("login")).sendKeys("pustyshkin97");
         driver.findElement(By.xpath("//button[@data-testid='enter-password']")).click();
         driver.findElement(By.xpath("//input[@data-testid='password-input']")).sendKeys("zxc56nm&");
         driver.findElement(By.xpath("//button[@data-testid='login-to-mail']")).click();
-        Thread.sleep(7000);
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@data-title-shortcut='N']")));
+    }
+
+    @Test
+    @Order(1)
+    public void endToEndSendEmptyMailTest() {
 
         driver.findElement(By.xpath("//a[@data-title-shortcut='N']")).click();
         driver.findElement(By.xpath("//input[contains(@class,'container') and @tabindex=100 ]"))
@@ -42,28 +58,13 @@ public class mailruTests {
 
 
         WebElement checkMessage = driver.findElement(By.xpath("//a[@class='layer__link']"));
-        assertThat(checkMessage.getText(),equalTo("Письмо отправлено"));
-
-        Thread.sleep(5000);
-        driver.quit();
+        assertThat(checkMessage.getText(), equalTo("Письмо отправлено"));
 
     }
 
-    @Order(2)
     @Test
-    public void endToEndMoveAllMailFromSendsToSketchesTest() throws InterruptedException {
-        WebDriverManager.chromedriver().setup();
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-        //driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-        driver.get("https://mail.ru/");
-        driver.findElement(By.name("login")).sendKeys("pustyshkin97");
-        driver.findElement(By.xpath("//button[@data-testid='enter-password']")).click();
-        driver.findElement(By.xpath("//input[@data-testid='password-input']")).sendKeys("zxc56nm&");
-        driver.findElement(By.xpath("//button[@data-testid='login-to-mail']")).click();
-        Thread.sleep(7000);
+    @Order(2)
+    public void endToEndMoveAllMailFromSendsToSketchesTest() {
 
         driver.findElement(By.xpath("//a[@Title='Отправленные']")).click();
         driver.findElement(By.xpath("//span[@class='button2__ico'][1]")).click(); //не смог найти ничего изящнее :(
@@ -74,27 +75,12 @@ public class mailruTests {
                 .click();
 
         WebElement checkMessage = driver.findElement(By.xpath("//span[@class='octopus__title']"));
-        assertThat(checkMessage.getText(),equalTo("В папке нет писем."));
+        assertThat(checkMessage.getText(), equalTo("В папке нет писем."));
 
-        Thread.sleep(5000);
-        driver.quit();
     }
-
-    @Order(3)
     @Test
-    public void endToEndMoveAllMailFromSketchesToSendsTest() throws InterruptedException {
-        WebDriverManager.chromedriver().setup();
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-        //driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-        driver.get("https://mail.ru/");
-        driver.findElement(By.name("login")).sendKeys("pustyshkin97");
-        driver.findElement(By.xpath("//button[@data-testid='enter-password']")).click();
-        driver.findElement(By.xpath("//input[@data-testid='password-input']")).sendKeys("zxc56nm&");
-        driver.findElement(By.xpath("//button[@data-testid='login-to-mail']")).click();
-        Thread.sleep(7000);
+    @Order(3)
+    public void endToEndMoveAllMailFromSketchesToSendsTest() {
 
         driver.findElement(By.xpath("//a[@Title='Черновики']")).click();
         driver.findElement(By.xpath("//span[@class='button2__ico'][1]")).click();//очередное топорное решение
@@ -104,12 +90,12 @@ public class mailruTests {
                 .click();
 
         WebElement checkMessage = driver.findElement(By.xpath("//span[@class='octopus__title']"));
-        //вот тут я вообще не понял разницы в ассерте
-        assertThat(checkMessage.getText(),equalTo("У вас нет незаконченных\\nили неотправленных писем"));
-
-        Thread.sleep(5000);
-        driver.quit();
+        assertThat(checkMessage.getText(), equalTo("У вас нет незаконченных\nили неотправленных писем"));
 
     }
 
+    @AfterEach
+    void tearDown() {
+        driver.quit();
+    }
 }
