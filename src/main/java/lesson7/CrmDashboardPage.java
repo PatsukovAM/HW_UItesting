@@ -1,5 +1,6 @@
-package lesson6;
+package lesson7;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,23 +36,24 @@ public class CrmDashboardPage extends CrmBaseView {
         this.webDriverWait = webDriverWait;
         PageFactory.initElements(driver,this);
     }
-
+    @Step("Переход на страницу \"Панели управления\"")
     public CrmDashboardPage openPage() {
         driver.get("https://crm.geekbrains.space/dashboard");
         return this;
     }
-
+    @Step("Клик на  \"Настройка инструментов\"")
     public CrmDashboardPage setUpView() {
         divSetUpView.click();
         return this;
     }
-
+    @Step("Смена позиций столбцов  \"Наименование\" и \"Владелец\" ")
     public CrmDashboardPage changeColumns() {
         new Actions(driver).clickAndHold(labelFirstChangeColumn)
                 .dragAndDrop(labelDragColumn, labelSecondChangeColumn).build().perform();
         return this;
     }
 
+    @Step("Проверка условия")
     public String checkout() {
         webDriverWait.until(d -> d.findElements(
                         By.xpath(TEST_3_CHECK_XPATH))

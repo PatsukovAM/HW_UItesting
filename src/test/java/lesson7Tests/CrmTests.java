@@ -1,10 +1,14 @@
-package lesson6Tests;
+package lesson7Tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import lesson6.*;
+
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import lesson7.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -13,6 +17,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.util.concurrent.TimeUnit;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
+@Story("CRM GeekBrains tests")
 
 public class CrmTests {
 
@@ -25,17 +31,21 @@ public class CrmTests {
     static final String TEST_3_CHECK_MESSAGE = "ВЛАДЕЛЕЦ";
 
     WebDriver driver;
+    //EventFiringWebDriver driver;
     WebDriverWait webDriverWait;
 
     @BeforeAll
     static void setupDriver() {
-        WebDriverManager.chromedriver().setup();
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
     }
 
     @BeforeEach
     void initBrowser() {
-        driver = new ChromeDriver();
+        ChromeOptions options= new ChromeOptions();
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+        //driver = new EventFiringWebDriver( new ChromeDriver(options));
+        //driver.register(new CustomLogger());
         webDriverWait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         crmLogin(driver);
@@ -52,6 +62,8 @@ public class CrmTests {
     }
 
     @Test
+    @Feature("Тестирование основного функционала")
+    @DisplayName("Создние нового проекта")
     @Order(1)
     public void createNewProjectTest() {
 
@@ -60,7 +72,7 @@ public class CrmTests {
                 .createProjectClick();
 
         String checkMessage = new CrmProjectCreatePage(driver)
-                .typeProjctName(PROJECT_NAME)
+                .typeProjectName(PROJECT_NAME)
                 .inputOrganization()
                 .choiceProjectType()
                 .selectPriority("Средний")
@@ -78,6 +90,8 @@ public class CrmTests {
     }
 
     @Test
+    @Feature("Тестирование основного функционала")
+    @DisplayName("Создние нового контакта")
     @Order(2)
     public void createNewContactPersonTest() {
 
@@ -99,7 +113,10 @@ public class CrmTests {
 
     }
 
+
     @Test
+    @Feature("Тестирование вспомогательного функционала")
+    @DisplayName("Изменение порядка расположения столбцов таблицы (смена столбцов таблицы)")
     @Order(3)
     public void changeColumnsTest() {
 
@@ -111,6 +128,7 @@ public class CrmTests {
 
         assertThat(checkMessage, equalTo(TEST_3_CHECK_MESSAGE));
     }
+
 
 
     @AfterEach

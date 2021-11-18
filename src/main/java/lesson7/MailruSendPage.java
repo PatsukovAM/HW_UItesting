@@ -1,10 +1,11 @@
-package lesson6;
+package lesson7;
 
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+
 
 public class MailruSendPage extends MailruBaseView {
 
@@ -29,22 +30,26 @@ public class MailruSendPage extends MailruBaseView {
         super(driver);
     }
 
+    @Step("Переход на страницу \"Отправленные\"")
     public MailruSendPage openPage(){
         aToSend.click();
         return this;
     }
 
+    @Step("Клик на  \"Выделить все\"")
     public MailruSendPage selectAll() {
         spanSelectAll.click();
         return this;
     }
 
+    @Step("Перемещение в раздел \"Черновики\"")
     public MailruSendPage moveToDrafts(){
         spanInDirectory.click();
         divToDrafts.click();
         return this;
     }
 
+    @Step("проверка условия")
     public String checkout(){
         return spanCheck.getText();
     }

@@ -1,6 +1,7 @@
-package lesson6;
+package lesson7;
 
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,37 +38,38 @@ public class CrmContactCreatePage extends CrmBaseView {
         super(driver);
     }
 
+    @Step("Заполнение поля \"фамилия\"")
     public CrmContactCreatePage typeLastName(String lastName) {
         inputLastName.sendKeys(lastName);
         return this;
     }
-
+    @Step("Заполнение поля \"имя\"")
     public CrmContactCreatePage typeFirstName(String firstName) {
         inputFirstName.sendKeys(firstName);
         return this;
     }
-
+    @Step("Выбор организации")
     public CrmContactCreatePage choseOrganization() {
         spanChoiceOrganization.click();
         divChoseOrganization.click();
         return this;
     }
-
+    @Step("Заполнение поля \"должность\"")
     public CrmContactCreatePage typeJobTitle(String jobTitle) {
         inputJobTitle.sendKeys(jobTitle);
         return this;
     }
-
+    @Step("Выбор статуса контакта")
     public CrmContactCreatePage selectContactStatus(String status) {
         new Select(selectContactStatus).selectByVisibleText(status);
         return this;
     }
-
+    @Step("Клик на \"Сохранить и закрыть\"")
     public CrmContactCreatePage successCreate() {
         buttonSuccessCreate.click();
         return this;
     }
-
+    @Step("Проверка условия")
     public String checkout() {
         return divCheck.getText();
     }

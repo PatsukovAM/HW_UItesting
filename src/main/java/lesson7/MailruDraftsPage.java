@@ -1,5 +1,6 @@
-package lesson6;
+package lesson7;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,22 +27,25 @@ public class MailruDraftsPage extends  MailruBaseView {
         super(driver);
     }
 
+    @Step("Переход на страницу \"Черновики\"")
     public MailruDraftsPage openPage() {
         aToDrafts.click();
         return this;
     }
 
+    @Step("Клик на \"Выделить все\"")
     public MailruDraftsPage selectAll() {
         spanSelectAll.click();
         return this;
     }
 
+    @Step("Перемещение в раздел \"Отправленные\"")
     public MailruDraftsPage moveToSend() {
         spanInDirectory.click();
         divToSend.click();
         return this;
     }
-
+    @Step("Проверка условия")
     public String checkout(){
         return spanCheck.getText();
     }

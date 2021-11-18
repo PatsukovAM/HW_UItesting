@@ -1,5 +1,6 @@
-package lesson6;
+package lesson7;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -50,62 +51,74 @@ public class CrmProjectCreatePage extends CrmBaseView {
         super(driver);
     }
 
-    public CrmProjectCreatePage typeProjctName(String projectName) {
+    @Step("Заполнение поля \"Наименование\"")
+    public CrmProjectCreatePage typeProjectName(String projectName) {
         inputProjectName.sendKeys(projectName);
         return this;
     }
 
+    @Step("Выбор организации")
     public CrmProjectCreatePage inputOrganization() {
         spanOrganizationName.click();
         selectOrganizationName.click();
         return this;
     }
 
+    @Step("Выбор типа проекта")
     public CrmProjectCreatePage choiceProjectType() {
         inputProjectType.click();
         return this;
     }
 
+    @Step("Выбор приоритете проекта")
     public CrmProjectCreatePage selectPriority(String priority) {
         new Select(selectProjectPriority).selectByVisibleText(priority);
         return this;
     }
 
+    @Step("Выбор источника финансирования")
     public CrmProjectCreatePage selectFinanceSource(String finance) {
         new Select(selectProjectFinanceSource).selectByVisibleText(finance);
         return this;
     }
 
+    @Step("Выбор подразделения")
     public CrmProjectCreatePage selectBusinessUnit(String unit) {
         new Select(selectProjectBusinessUnit).selectByVisibleText(unit);
         return this;
     }
 
+    @Step("Выбор куратора проекта")
     public CrmProjectCreatePage selectCurator(String curator) {
         new Select(selectProjectCurator).selectByVisibleText(curator);
         return this;
     }
 
+    @Step("Выбор руководителя проекта")
     public CrmProjectCreatePage selectDirector(String director) {
         new Select(selectProjectDirector).selectByVisibleText(director);
         return this;
     }
 
+    @Step("Выбор куратора проекта")
     public CrmProjectCreatePage selectAdministrator(String administrator) {
         new Select(selectProjectAdministrator).selectByVisibleText(administrator);
         return this;
     }
 
+    @Step("Выбор менеджера проекта")
     public CrmProjectCreatePage selectManager(String manager) {
         new Select(selectProjectManager).selectByVisibleText(manager);
         return this;
     }
 
+    @Step("Клик на  \"Сохранить и закрыть\"")
     public CrmProjectCreatePage saveAndClose() {
         buttonSaveAndClose.click();
         return this;
     }
 
+    @Step("Проверка условия")
     public String checkout() {
         return spanCheck.getText();
     }

@@ -1,5 +1,6 @@
-package lesson6;
+package lesson7;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,22 +35,25 @@ public class MailruMainPage extends MailruBaseView {
         this.webDriverWait=webDriverWait;
     }
 
+    @Step("Переход на стартовую страницу \"Mail.ru\"")
     public MailruMainPage openPage() {
         driver.get("https://mail.ru/");
         return this;
     }
 
+    @Step("Заполнение поля \"имя ящика\"")
     public MailruMainPage typeLogin (String login) {
         inputLogin.sendKeys(login);
         buttonSwitchToTypePassword.click();
         return this;
     }
 
+    @Step("Заполнение поля \"Пароль\"")
     public MailruMainPage typePassword (String password) {
         inputPassword.sendKeys(password);
         return this;
     }
-
+    @Step("Клик на \"Войти\"")
     public void login() {
         buttonLogin.click();
 //        вот это вот не сработало
