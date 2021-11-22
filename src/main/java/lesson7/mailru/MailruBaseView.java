@@ -1,13 +1,12 @@
-package lesson7;
+package lesson7.mailru;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class CrmBaseView {
-
+public class MailruBaseView {
     WebDriver driver;
 
-    public CrmBaseView(WebDriver driver) {
+    public MailruBaseView (WebDriver driver) {
         this.driver=driver;
         PageFactory.initElements(driver,this);
     }

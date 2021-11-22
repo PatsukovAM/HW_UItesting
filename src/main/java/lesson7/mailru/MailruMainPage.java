@@ -1,4 +1,4 @@
-package lesson7;
+package lesson7.mailru;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -56,8 +56,6 @@ public class MailruMainPage extends MailruBaseView {
     @Step("Клик на \"Войти\"")
     public void login() {
         buttonLogin.click();
-//        вот это вот не сработало
-//        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(String.valueOf(aWait))));
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@data-title-shortcut='N']")));
     }
 }

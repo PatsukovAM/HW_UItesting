@@ -1,4 +1,4 @@
-package lesson7;
+package lesson7.crm;
 
 
 import org.openqa.selenium.WebDriver;

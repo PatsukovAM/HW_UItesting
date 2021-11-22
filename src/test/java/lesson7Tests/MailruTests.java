@@ -3,12 +3,14 @@ package lesson7Tests;
 
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import lesson7.*;
+import lesson7.mailru.MailruDraftsPage;
+import lesson7.mailru.MailruInboxPage;
+import lesson7.mailru.MailruMainPage;
+import lesson7.mailru.MailruSendPage;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.hamcrest.core.IsEqual.equalTo;

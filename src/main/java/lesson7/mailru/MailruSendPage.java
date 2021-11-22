@@ -1,4 +1,4 @@
-package lesson7;
+package lesson7.mailru;
 
 
 import io.qameta.allure.Step;
